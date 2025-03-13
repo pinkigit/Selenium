@@ -1,9 +1,15 @@
 package com.test;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.cucumber.messages.internal.com.google.protobuf.Duration;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DemoBlazeTest {
@@ -14,7 +20,7 @@ public class DemoBlazeTest {
 
         // Initialize WebDriver (Chrome)
         WebDriver driver = new ChromeDriver();
-        
+
         try {
             // Navigate to the DemoBlaze website
             driver.get("https://www.demoblaze.com/");
@@ -27,14 +33,24 @@ public class DemoBlazeTest {
                 System.out.println("Page title is incorrect: " + pageTitle);
             }
 
-           
-            WebElement signInButton = driver.findElement(By.id("signin2"));
+            // Wait for the "Sign In" button to be clickable and then click it
+            WebDriverWait wait = new WebDriverWait(driver,10);
+            WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("login2")));
             signInButton.click();
-            
-            WebElement usernameField = driver.findElement(By.id("loginusername"));
-            System.out.println("user-------------");
-            usernameField.click(); 
-            usernameField.sendKeys("Psaru");
+
+            // Wait for the login modal to appear
+            WebElement usernameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("loginusername")));
+            WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("loginpassword")));
+
+            // Scroll to the username and password fields
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", usernameField);
+
+            // Use Actions class to focus on the username field and input text
+            Actions actions = new Actions(driver);
+            actions.moveToElement(usernameField).click().sendKeys("Psaru").perform();  // Enter your username
+
+            actions.moveToElement(passwordField).click().sendKeys("pinki123").perform(); // Enter your password
+
 
            
 			/*
