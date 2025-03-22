@@ -12,29 +12,37 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import io.cucumber.messages.internal.com.google.protobuf.Duration;
+import org.apache.log4j.Logger;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DemoBlazeTest {
 
-	public static void main(String[] args) {
+    private static final Logger logger = Logger.getLogger(DemoBlazeTest.class);
+
+    public static void main(String[] args) {
+		
+	 {
 		// Setup WebDriverManager to handle ChromeDriver versioning automatically
 		WebDriverManager.chromedriver().setup();
 
+		
+		
 		// Initialize WebDriver (Chrome)
 		WebDriver driver = new ChromeDriver();
 
 		try {
 			// Navigate to the DemoBlaze website
+			 logger.info("Opening browser...");
 			driver.get("https://www.demoblaze.com/");
 			driver.manage().window().maximize();
 
 			// Verify the page title
 			String pageTitle = driver.getTitle();
 			if (pageTitle.contains("STORE")) {
+				logger.info("Page title is correct: " + pageTitle);
 				System.out.println("Page title is correct: " + pageTitle);
 			} else {
+				logger.warn("Page title is incorrect: " + pageTitle);
 				System.out.println("Page title is incorrect: " + pageTitle);
 			}
 
@@ -85,8 +93,10 @@ public class DemoBlazeTest {
 			}
 
 			if (alertText.equals("Product added.")) {
+				logger.info("product successfully added to cart");
 				System.out.println("product successfully added to cart");
 			} else {
+				logger.warn("Test failed:Unexpected alert message :" + alertText);
 				System.out.println("Test failed:Unexpected alert message :" + alertText);
 			}
 
@@ -125,16 +135,23 @@ public class DemoBlazeTest {
 			 wait.until(ExpectedConditions.elementToBeClickable(By.
 			  xpath("//button[contains(text(), 'Purchase')]"))) .click();
 			 
+			 wait.until(ExpectedConditions.elementToBeClickable(By.
+					  xpath("//button[contains(text(), 'OK')]"))) .click(); 
 			 
+			 wait.until(ExpectedConditions.elementToBeClickable(By.
+					  xpath("//button[contains(text(), 'Close')]"))) .click();
 
 		}
 
 		catch (Exception e) {
+			logger.error("Test Failed :" + e.getMessage());
 			System.out.println("Test Failed :" + e.getMessage());
 
 		} finally {
-			// driver.quit();
+			//driver.quit();
+			//logger.info("Browser closed.");
 		}
 
 	}
+}
 }
