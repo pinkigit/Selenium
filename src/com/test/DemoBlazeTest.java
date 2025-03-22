@@ -1,8 +1,11 @@
 package com.test;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
-import org.apache.hc.core5.util.Asserts;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,12 +15,25 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.apache.log4j.Logger;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DemoBlazeTest {
 
-    private static final Logger logger = Logger.getLogger(DemoBlazeTest.class);
+    private static final Logger LOGGER = Logger.getLogger(DemoBlazeTest.class.getName());
+    
+    static {
+        try {
+            // Create a FileHandler that writes log to a file
+            FileHandler fileHandler = new FileHandler("app.log", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            
+            // Add the handler to the logger
+            LOGGER.addHandler(fileHandler);
+            LOGGER.setLevel(Level.ALL);
+        } catch (IOException e) {
+            System.err.println("Failed to initialize log file: " + e.getMessage());
+        }
+    }
 
     public static void main(String[] args) {
 		
@@ -32,17 +48,17 @@ public class DemoBlazeTest {
 
 		try {
 			// Navigate to the DemoBlaze website
-			 logger.info("Opening browser...");
+			LOGGER.info("Opening browser...");
 			driver.get("https://www.demoblaze.com/");
 			driver.manage().window().maximize();
 
 			// Verify the page title
 			String pageTitle = driver.getTitle();
 			if (pageTitle.contains("STORE")) {
-				logger.info("Page title is correct: " + pageTitle);
+				LOGGER.info("Page title is correct: " + pageTitle);
 				System.out.println("Page title is correct: " + pageTitle);
 			} else {
-				logger.warn("Page title is incorrect: " + pageTitle);
+				LOGGER.info("Page title is incorrect: " + pageTitle);
 				System.out.println("Page title is incorrect: " + pageTitle);
 			}
 
@@ -93,10 +109,10 @@ public class DemoBlazeTest {
 			}
 
 			if (alertText.equals("Product added.")) {
-				logger.info("product successfully added to cart");
+				LOGGER.info("product successfully added to cart");
 				System.out.println("product successfully added to cart");
 			} else {
-				logger.warn("Test failed:Unexpected alert message :" + alertText);
+				LOGGER.info("Test failed:Unexpected alert message :" + alertText);
 				System.out.println("Test failed:Unexpected alert message :" + alertText);
 			}
 
@@ -144,7 +160,7 @@ public class DemoBlazeTest {
 		}
 
 		catch (Exception e) {
-			logger.error("Test Failed :" + e.getMessage());
+			LOGGER.info("Test Failed :" + e.getMessage());
 			System.out.println("Test Failed :" + e.getMessage());
 
 		} finally {

@@ -1,0 +1,13 @@
+Mar 23, 2025 12:52:21 AM com.test.DemoBlazeTest main
+INFO: Opening browser...
+Mar 23, 2025 12:52:23 AM com.test.DemoBlazeTest main
+INFO: Page title is correct: STORE
+Mar 23, 2025 12:52:34 AM com.test.DemoBlazeTest main
+INFO: product successfully added to cart
+Mar 23, 2025 12:52:50 AM com.test.DemoBlazeTest main
+INFO: Test Failed :Expected condition failed: waiting for element to be clickable: By.xpath: //button[contains(text(), 'Close')] (tried for 10 second(s) with 500 milliseconds interval)
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'LAPTOP-KS4S8PTB', ip: '192.168.1.126', os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_401'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 134.0.6998.119, chrome: {chromedriverVersion: 134.0.6998.165 (fd886e2cb29..., userDataDir: C:\Users\saroj\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:63006}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: d633ed0c3d416838805a61382ddb4d11
